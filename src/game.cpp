@@ -5,6 +5,7 @@
 
 #include "resourcemanager.h"
 #include "mainmenuscreen.h"
+#include "playscreen.h"
 
 Game::Game(void)
     : m_window(sf::VideoMode(500, 500), L"TicTacToe \xA9 Milos Zivlak 2017"),
@@ -15,6 +16,7 @@ Game::Game(void)
     m_window.setFramerateLimit(60);
 
     m_screens[GameStateMainMenu] = std::make_shared<MainMenuScreen>();
+    m_screens[GameStatePlaying] = std::make_shared<PlayScreen>();
 }
 
 Game::~Game(void)
