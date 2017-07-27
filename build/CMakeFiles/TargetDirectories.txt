@@ -1,3 +1,0 @@
-/home/zi/gamedev/TicTacToe/build/CMakeFiles/rebuild_cache.dir
-/home/zi/gamedev/TicTacToe/build/CMakeFiles/edit_cache.dir
-/home/zi/gamedev/TicTacToe/build/CMakeFiles/TicTacToe.dir
