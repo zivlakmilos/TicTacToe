@@ -12,6 +12,7 @@ CMakeFiles/TicTacToe.dir/src/main.cpp.o
  ../include/screen.h
  /home/zi/gamedev/TicTacToe/src/main.cpp
 CMakeFiles/TicTacToe.dir/src/mainmenuscreen.cpp.o
+ ../include/game.h
  ../include/mainmenuscreen.h
  ../include/resourcemanager.h
  ../include/screen.h

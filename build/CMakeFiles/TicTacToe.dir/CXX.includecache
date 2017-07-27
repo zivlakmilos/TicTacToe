@@ -15,6 +15,8 @@ memory
 ../include/mainmenuscreen.h
 screen.h
 ../include/screen.h
+SFML/Graphics/Text.hpp
+-
 
 ../include/resourcemanager.h
 string
@@ -51,10 +53,14 @@ game.h
 /home/zi/gamedev/TicTacToe/src/mainmenuscreen.cpp
 mainmenuscreen.h
 /home/zi/gamedev/TicTacToe/src/mainmenuscreen.h
+iostream
+-
 SFML/Graphics.hpp
 -
 resourcemanager.h
 /home/zi/gamedev/TicTacToe/src/resourcemanager.h
+game.h
+/home/zi/gamedev/TicTacToe/src/game.h
 
 /home/zi/gamedev/TicTacToe/src/resourcemanager.cpp
 resourcemanager.h
