@@ -9,7 +9,7 @@ public:
     Screen(void) {}
     virtual ~Screen(void) {}
 
-    virtual void handleEvents(void) = 0;
+    virtual int handleEvents(sf::RenderWindow &window) = 0;
     virtual void update(float deltaTime) = 0;
     virtual void draw(sf::RenderWindow &window) = 0;
 

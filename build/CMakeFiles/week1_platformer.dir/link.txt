@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -g   CMakeFiles/week1_platformer.dir/src/main.cpp.o  -o week1_platformer -rdynamic -lsfml-graphics -lsfml-window -lsfml-system 
