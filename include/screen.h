@@ -7,7 +7,7 @@ class Screen
 {
 public:
     Screen(void) {}
-    virtual Screen(void) {}
+    virtual ~Screen(void) {}
 
     virtual void handleEvents(void) = 0;
     virtual void update(float deltaTime) = 0;
