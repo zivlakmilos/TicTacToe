@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 class Board
 {
@@ -41,6 +42,7 @@ private:
     sf::Vector2f m_position;
 
     sf::Sprite m_playerSprite;
+    sf::VertexArray m_crossLine;
 };
 
 #endif // _BOARD_H_

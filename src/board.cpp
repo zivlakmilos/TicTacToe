@@ -6,7 +6,8 @@
 #include "resourcemanager.h"
 
 Board::Board(void)
-    : m_turn(TurnX)
+    : m_turn(TurnX),
+      m_lastMove(-1, -1)
 {
     for(int i = 0; i < 3; i++)
         for(int j = 0; j < 3; j++)
@@ -81,6 +82,9 @@ void Board::draw(sf::RenderWindow &window)
         }
     }
 
+    if(m_crossLine.getVertexCount() == 2)
+        window.draw(&m_crossLine[0], m_crossLine.getVertexCount(), sf::Lines);
+
     sf::Vector2i mouse = mapCoordsToGreed(sf::Mouse::getPosition(window));
     if(mouse.x < 0 && mouse.y < 0 ||
         m_state[mouse.y][mouse.x] != StateFree ||
@@ -109,7 +113,9 @@ void Board::makeMove(const sf::Vector2i &position)
 {
     sf::Vector2i mouse = mapCoordsToGreed(position);
 
-    if(m_state[mouse.y][mouse.x] != StateFree)
+    if(mouse.y < 0 || mouse.x < 0 ||
+        m_state[mouse.y][mouse.x] != StateFree ||
+        m_turn == TurnGameOver)
         return;
 
     m_lastMove = mouse;
@@ -127,28 +133,51 @@ void Board::makeMove(const sf::Vector2i &position)
 
 int Board::checkForWin(void)
 {
+    if(m_lastMove.x < 0 || m_lastMove.y < 0)
+        return StateFree;
+
     int state = m_state[m_lastMove.y][m_lastMove.x];
 
-    bool row = true;
-    bool column = true;
-    bool leftDieg = true;
-    bool rightDieg = true;
+    sf::VertexArray vertices[4];
     for(int i = 0; i < 3; i++)
     {
-        if(m_state[m_lastMove.y][i] != state)
-            row = false;
-        if(m_state[i][m_lastMove.x] != state)
-            column = false;
-        if(m_state[i][i] != state)
-            leftDieg = false;
-        if(m_state[i][2 - i] != state)
-            rightDieg = false;
+        if(m_state[m_lastMove.y][i] == state)
+            vertices[0].append(sf::Vertex(sf::Vector2f(i, m_lastMove.y)));
+        if(m_state[i][m_lastMove.x] == state)
+            vertices[1].append(sf::Vertex(sf::Vector2f(m_lastMove.x, i)));
+        if(m_state[i][i] == state)
+            vertices[2].append(sf::Vertex(sf::Vector2f(i, i)));
+        if(m_state[i][2 - i] == state)
+            vertices[3].append(sf::Vertex(sf::Vector2f(2 - i, i)));
     }
 
-    if(row || column || leftDieg || rightDieg)
+    for(int i = 0; i < 4; i++)
     {
-        m_turn = TurnGameOver;
-        return m_state[m_lastMove.y][m_lastMove.x];
+        if(vertices[i].getVertexCount() == 3)
+        {
+            m_turn = TurnGameOver;
+
+            sf::Vector2f positionStart(m_position.x + vertices[i][0].position.x * CellWidth + CellWidth / 2.0f,
+                                       m_position.y + vertices[i][0].position.y * CellHeight + CellHeight / 2.0f);
+            sf::Vector2f positionEnd(m_position.x + vertices[i][2].position.x * CellWidth + CellWidth / 2.0f,
+                                     m_position.y + vertices[i][2].position.y * CellHeight + CellHeight / 2.0f);
+
+            m_crossLine.clear();
+            m_crossLine.append(sf::Vertex(positionStart));
+            m_crossLine.append(sf::Vertex(positionEnd));
+
+            if(state == StateX)
+            {
+                m_crossLine[0].color = sf::Color::Red;
+                m_crossLine[1].color = sf::Color::Red;
+            } else if(state == StateO)
+            {
+                m_crossLine[0].color = sf::Color::Blue;
+                m_crossLine[1].color = sf::Color::Blue;
+            }
+
+            return m_state[m_lastMove.y][m_lastMove.x];
+        }
     }
 
     return StateFree;
