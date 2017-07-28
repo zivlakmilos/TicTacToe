@@ -18,7 +18,8 @@ public:
 
     enum Turn {
         TurnX = 0,
-        TurnO
+        TurnO,
+        TurnGameOver
     };
 
     enum CellSize {
@@ -30,10 +31,12 @@ public:
     void draw(sf::RenderWindow &window);
 
     void makeMove(const sf::Vector2i &position);
+    int checkForWin(void);
 
 private:
     int m_state[3][3];
     int m_turn;
+    sf::Vector2i m_lastMove;
 
     sf::Vector2f m_position;
 

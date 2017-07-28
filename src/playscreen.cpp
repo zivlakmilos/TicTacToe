@@ -25,7 +25,10 @@ int PlayScreen::handleEvents(sf::RenderWindow &window)
                 break;
             case sf::Event::MouseButtonPressed:
                 if(event.mouseButton.button == sf::Mouse::Left)
+                {
                     m_board.makeMove(sf::Mouse::getPosition(window));
+                    m_board.checkForWin();
+                }
                 break;
         }
     }

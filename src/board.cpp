@@ -54,9 +54,6 @@ void Board::draw(sf::RenderWindow &window)
         window.draw(&vertices[0], vertices.getVertexCount(), sf::Lines);
     }
 
-    m_state[0][0] = StateO;
-    m_state[1][1] = StateX;
-
     for(int i = 0; i < 3; i++)
     {
         for(int j = 0; j < 3; j++)
@@ -86,7 +83,8 @@ void Board::draw(sf::RenderWindow &window)
 
     sf::Vector2i mouse = mapCoordsToGreed(sf::Mouse::getPosition(window));
     if(mouse.x < 0 && mouse.y < 0 ||
-        m_state[mouse.y][mouse.x] != StateFree)
+        m_state[mouse.y][mouse.x] != StateFree ||
+        m_turn == TurnGameOver)
         return;
 
     try {
@@ -111,6 +109,11 @@ void Board::makeMove(const sf::Vector2i &position)
 {
     sf::Vector2i mouse = mapCoordsToGreed(position);
 
+    if(m_state[mouse.y][mouse.x] != StateFree)
+        return;
+
+    m_lastMove = mouse;
+
     if(m_turn == TurnX)
     {
         m_state[mouse.y][mouse.x] = StateX;
@@ -120,4 +123,33 @@ void Board::makeMove(const sf::Vector2i &position)
         m_state[mouse.y][mouse.x] = StateO;
         m_turn = TurnX;
     }
+}
+
+int Board::checkForWin(void)
+{
+    int state = m_state[m_lastMove.y][m_lastMove.x];
+
+    bool row = true;
+    bool column = true;
+    bool leftDieg = true;
+    bool rightDieg = true;
+    for(int i = 0; i < 3; i++)
+    {
+        if(m_state[m_lastMove.y][i] != state)
+            row = false;
+        if(m_state[i][m_lastMove.x] != state)
+            column = false;
+        if(m_state[i][i] != state)
+            leftDieg = false;
+        if(m_state[i][2 - i] != state)
+            rightDieg = false;
+    }
+
+    if(row || column || leftDieg || rightDieg)
+    {
+        m_turn = TurnGameOver;
+        return m_state[m_lastMove.y][m_lastMove.x];
+    }
+
+    return StateFree;
 }
