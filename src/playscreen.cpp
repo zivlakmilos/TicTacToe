@@ -27,7 +27,12 @@ int PlayScreen::handleEvents(sf::RenderWindow &window)
                 if(event.mouseButton.button == sf::Mouse::Left)
                 {
                     m_board.makeMove(sf::Mouse::getPosition(window));
-                    m_board.checkForWin();
+                    if(m_board.checkForWin() < 0)
+                    {
+                        sf::Vector2i position = m_ai.calcBestMove(m_board);
+                        m_board.makeMoveAi(position);
+                        m_board.checkForWin();
+                    }
                 }
                 break;
         }

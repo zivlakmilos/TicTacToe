@@ -14,6 +14,7 @@ set(SOURCES
     src/resourcemanager.cpp
 
     src/board.cpp
+    src/ai.cpp
 
     src/mainmenuscreen.cpp
     src/playscreen.cpp

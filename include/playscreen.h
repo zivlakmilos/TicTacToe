@@ -4,6 +4,7 @@
 #include "screen.h"
 
 #include "board.h"
+#include "ai.h"
 
 class PlayScreen : public Screen
 {
@@ -17,6 +18,7 @@ public:
 
 private:
     Board m_board;
+    Ai m_ai;
 };
 
 #endif // _PLAY_SCREEN_H_

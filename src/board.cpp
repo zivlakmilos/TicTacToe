@@ -131,10 +131,24 @@ void Board::makeMove(const sf::Vector2i &position)
     }
 }
 
+void Board::makeMoveAi(const sf::Vector2i &position)
+{
+    m_lastMove = position;
+    if(m_turn == TurnX)
+    {
+        m_state[position.y][position.x] = StateX;
+        m_turn = TurnO;
+    } else if(m_turn == TurnO)
+    {
+        m_state[position.y][position.x] = StateO;
+        m_turn = TurnX;
+    }
+}
+
 int Board::checkForWin(void)
 {
     if(m_lastMove.x < 0 || m_lastMove.y < 0)
-        return StateFree;
+        return -1;
 
     int state = m_state[m_lastMove.y][m_lastMove.x];
 
@@ -177,6 +191,15 @@ int Board::checkForWin(void)
             }
 
             return m_state[m_lastMove.y][m_lastMove.x];
+        }
+    }
+
+    for(int i = 0; i < 3; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(m_state[i][j] != StateFree)
+                return -1;
         }
     }
 

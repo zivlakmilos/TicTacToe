@@ -28,10 +28,18 @@ public:
         CellHeight = 128
     };
 
+    inline int getValue(int x, int y) { return m_state[y][x]; }
+    inline void setValue(int x, int y, int value) { m_state[y][x] = value; m_lastMove = sf::Vector2i(x, y); }
+
+    inline void setTurn(int turn) { m_turn = turn; }
+
+    inline void clearCrossLine(void) { m_crossLine.clear(); }
+
     sf::Vector2i mapCoordsToGreed(const sf::Vector2i &coords);
     void draw(sf::RenderWindow &window);
 
     void makeMove(const sf::Vector2i &position);
+    void makeMoveAi(const sf::Vector2i &position);
     int checkForWin(void);
 
 private:
