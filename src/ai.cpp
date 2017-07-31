@@ -1,7 +1,5 @@
 #include "ai.h"
 
-#include <iostream>
-
 Ai::Ai(void)
 {
 }
@@ -13,9 +11,6 @@ Ai::~Ai(void)
 sf::Vector2i Ai::calcBestMove(Board &board)
 {
     Move move = minimax(board, Board::TurnO);
-    std::cout << move.x << std::endl
-              << move.y << std::endl
-              << move.points << std::endl;
     return sf::Vector2i(move.x, move.y);
 }
 

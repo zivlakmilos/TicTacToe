@@ -198,7 +198,7 @@ int Board::checkForWin(void)
     {
         for(int j = 0; j < 3; j++)
         {
-            if(m_state[i][j] != StateFree)
+            if(m_state[i][j] == StateFree)
                 return -1;
         }
     }
